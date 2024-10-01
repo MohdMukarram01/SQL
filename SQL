@@ -65,5 +65,9 @@ INNER JOIN project as p ON e.id = p.empID;
 select e.id,e.email,e.PhoneNo,c.fname,c.lname from employees as e
 INNER JOIN client_table as c ON e.id=c.empID where e.city='pune' AND c.city='pune';
 
+select * from employees as e
+LEFT JOIN project as p ON e.id=p.empID;
 
+select e.id,p.pname,e.fname,e.lname,e.Email from employees as e
+RIGHT JOIN project as p ON e.id=p.empID;
 
