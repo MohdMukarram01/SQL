@@ -1,0 +1,70 @@
+use mukarram;
+
+create Table employees(
+  id integer PRIMARY KEY,
+  fname VARCHAR(255),
+  lname VARCHAR(255),
+  Age integer,
+  Email VARCHAR(255),
+  PhoneNo integer,
+  city VARCHAR(255)
+  );
+  
+INSERT INTO Employees (id,fname,lname,Age,Email,PhoneNo,city)
+VALUES  (1,'Aman','pratap',28,'aman@gmail.com',855,'Delhi'),
+		(2,'yagya','maurya',26,'yagya@gmail.com',856,'lucknow'),
+		(3,'yogesh','raaj',32,'aman@gmail.com',655,'kanpur'),
+		(4,'yogesh','panday',30,'aman@gmail.com',565,'mumbai'),
+		(5,'monu','panday',32,'aman@gmail.com',575,'pune');
+
+SELECT * FROM employees;
+
+CREATE TABLE Project (
+  id INTEGER PRIMARY KEY,
+  empID INT,
+  pname VARCHAR(255) NOT NULL,
+  startdate DATE NOT NULL,
+  ClientID INT,
+  FOREIGN KEY (empID) REFERENCES employees(id),
+  FOREIGN KEY (ClientID) REFERENCES client_table(id) 
+);
+
+INSERT INTO project (id,empID,pname,startdate,ClientID)
+values (1,1,'A','2020-02-15',3),
+(2,2,'B','2020-02-15',1),
+(3,3,'C','2020-02-15',5),
+(4,4,'D','2020-02-15',2),
+(5,5,'E','2020-02-15',4);
+ 
+SELECT * FROM Project;
+
+CREATE TABLE client_table (
+  id INTEGER PRIMARY KEY,
+  fname VARCHAR(255),
+  lname VARCHAR(255),
+  Age INTEGER,
+  Email VARCHAR(255),
+  PhoneNo VARCHAR(15),
+  city VARCHAR(255),
+  empID INT
+);
+
+INSERT INTO client_table (id,fname,lname,Age,Email,PhoneNo,city,empID)
+values (1,'mac','roger',47,'mac@gmail.com',857,'kolkata',3),
+  (2,'muneer','khan',44,'muneer@gmail.com',477,'mumbai',4),
+  (3,'sonu','kumar',33,'sonu@gmail.com',364,'delhi',1),
+  (4,'mohit','panday',37,'mohit@gmail.com',244,'pune',5),
+  (5,'sameer','anwar',27,'sameer@gmail.com',547,'banglore',2);
+  
+  
+SELECT * FROM client_table;
+
+-- find the no.of employee which is age greater than 30.
+select * from client_table where age IN (select age from client_table where age>40);
+
+-- employee detail working in more than one project.
+select * from employees where id in (select empID from project group by empID having count(empID)>1);
+
+-- single value subquery
+select fname,lname,Age from employees where age > (select avg(Age) from employees);
+
