@@ -1,0 +1,52 @@
+create database sets;
+use sets;
+
+create table dept_1 (
+empID int,
+name varchar(255),
+role varchar(255)
+);
+insert into dept_1 (empID,name,role)
+values (1,'A','engineer'),
+(2,'B','salesman'),
+(3,'C','manager'),
+(4,'D','salesman'),
+(5,'E','engineer');
+
+select * from dept_1;
+
+create table dept_2 (
+empID int,
+name varchar(255),
+role varchar(255)
+);
+
+insert into dept_2 (empID,name,role)
+values (3,'C','manager'),
+(6,'F','marketing'),
+(7,'G','salesman');
+
+select * from dept_2;
+
+-- union operation
+
+select * from dept_1
+UNION
+select * from dept_2;
+
+-- second method of UNION
+
+select * from dept_1 where role='salesman'
+UNION
+select * from dept_2 where role='salesman';
+
+-- INTERSECTION -> There is no keyword of instersection so we emulate the keyword in inner join  
+select distinct empID,name,role from dept_1
+INNER JOIN dept_2 using (id);
+
+select dept_1.* from dept_1 INNER JOIN dept_2 USING(empid);
+
+-- MINUS operaton
+select dept_1.* from dept_1
+LEFT JOIN dept_2 USING (empID)
+WHERE dept_2.empID is NULL;
